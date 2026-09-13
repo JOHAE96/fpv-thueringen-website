@@ -1,0 +1,35 @@
+{
+  "name": "fpv-thueringen-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Website des FPV Thüringen e.V. — statisch mit Astro, Inhalte als Markdown. Basiert auf dem Theme Sumi (https://github.com/kpab/astro-sumi, MIT).",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.1.6",
+    "satori": "^0.29.0",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
