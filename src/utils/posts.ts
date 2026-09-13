@@ -1,16 +1,16 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
-export type Post = CollectionEntry<"blog">;
+export type Post = CollectionEntry<"posts">;
 
 export interface TagCount {
   /** Original casing, as written in the frontmatter. */
   name: string;
-  /** URL-safe form used by /tags/[tag]. */
+  /** URL-safe form used by /news/tags/[tag]. */
   slug: string;
   count: number;
 }
 
-/** URL-safe form of a tag. Keep this in sync with the /tags routes. */
+/** URL-safe form of a tag. Keep this in sync with the /news/tags routes. */
 export function tagSlug(tag: string): string {
   return tag
     .trim()
@@ -26,20 +26,18 @@ export function tagSlug(tag: string): string {
  * drop out of production builds.
  */
 export async function getPublishedPosts(): Promise<Post[]> {
-  const posts = await getCollection("blog", ({ data }) =>
+  const posts = await getCollection("posts", ({ data }) =>
     import.meta.env.PROD ? !data.draft : true,
   );
 
-  return posts.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+  return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export function collectTags(posts: Post[]): TagCount[] {
   const byslug = new Map<string, TagCount>();
 
   for (const post of posts) {
-    for (const name of post.data.tags) {
+    for (const name of post.data.tags ?? []) {
       const slug = tagSlug(name);
       if (!slug) continue;
       const existing = byslug.get(slug);
@@ -57,7 +55,9 @@ export function collectTags(posts: Post[]): TagCount[] {
 }
 
 export function postsByTag(posts: Post[], slug: string): Post[] {
-  return posts.filter((post) => post.data.tags.some((t) => tagSlug(t) === slug));
+  return posts.filter((post) =>
+    (post.data.tags ?? []).some((t) => tagSlug(t) === slug),
+  );
 }
 
 /**
