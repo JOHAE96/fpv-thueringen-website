@@ -1,7 +1,7 @@
 ---
-title: "Betafpv Twiglet 1S Whoop"
+title: "Johannes’ 2-Zoll-1S-Drohne"
 date: 2026-09-10
-description: "Leichter 1S-Whoop für drinnen und windstille Tage"
+description: "Leichter 1S-Whoop"
 cover: "./bilder/cover.jpg"
 components:
   frame: "Betafpv Twiglet"
@@ -23,6 +23,8 @@ Flaute.
 
 ## Warum dieser Aufbau
 
+Ursprünglich als Li-Ion Drohne gedacht, aber mit LiPo noch spaßiger
+
 Alles an diesem Build ist auf geringes Gewicht optimiert: Onboard-Empfänger und Onboard-VTX statt
 separater Module, dazu die dreiblättrigen Hurricane-Props, die bei diesem geringen Gewicht
 überraschend viel Schub und Kontrolle liefern. Bei 30 Gramm ohne Akku bleibt die Kiste angenehm
@@ -31,11 +33,4 @@ verzeihend, auch wenn man mal eine Wand touchiert.
 ## Wie er fliegt
 
 Sehr direkt und verspielt, aber ohne die Nervosität, die viele Tiny-Whoops bei höheren Raten
-zeigen. Für enge Gates in der Wohnung oder in der Halle ist er ideal. Bei Wind ab etwa 2–3 m/s
-wird es allerdings schnell hakelig — dafür ist der Twiglet einfach zu leicht.
-
-## Was wir anders machen würden
-
-Die Dipol-Antenne ist im Innenbereich unkritisch, aber bei Außeneinsätzen mit mehr Abstand zum
-Piloten würden wir auf eine Antenne mit etwas mehr Reichweite wechseln. Für den aktuellen
-Einsatzzweck — drinnen und windstill — passt der Aufbau aber genau so, wie er ist.
+zeigen.Super schnell, und nichts mehr für indoor.
