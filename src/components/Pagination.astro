@@ -3,40 +3,40 @@ import type { Page } from "astro";
 
 interface Props {
   page: Page<unknown>;
-  /** Accessible name, e.g. "Blog posts". */
+  /** Accessible name, e.g. "News". */
   label?: string;
 }
 
-const { page, label = "Posts" } = Astro.props;
+const { page, label = "Beiträge" } = Astro.props;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
 {
   page.lastPage > 1 && (
-    <nav class="pagination" aria-label={`${label} pagination`}>
+    <nav class="pagination" aria-label={`Seiten — ${label}`}>
       {page.url.prev ? (
         <a class="pagination__step" href={page.url.prev} rel="prev">
-          ← Newer
+          ← Neuer
         </a>
       ) : (
-        <span class="pagination__step pagination__step--off">← Newer</span>
+        <span class="pagination__step pagination__step--off">← Neuer</span>
       )}
 
       <p class="pagination__count">
-        <span class="visually-hidden">Page </span>
+        <span class="visually-hidden">Seite </span>
         {pad(page.currentPage)}
         <span aria-hidden="true"> / </span>
-        <span class="visually-hidden">of </span>
+        <span class="visually-hidden">von </span>
         {pad(page.lastPage)}
       </p>
 
       {page.url.next ? (
         <a class="pagination__step" href={page.url.next} rel="next">
-          Older →
+          Älter →
         </a>
       ) : (
-        <span class="pagination__step pagination__step--off">Older →</span>
+        <span class="pagination__step pagination__step--off">Älter →</span>
       )}
     </nav>
   )

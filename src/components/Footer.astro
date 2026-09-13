@@ -1,5 +1,5 @@
 ---
-import { AUTHOR, SITE, SOCIAL } from "../config";
+import { CLUB, SITE, SOCIAL } from "../config";
 
 const year = new Date().getFullYear();
 ---
@@ -26,9 +26,7 @@ const year = new Date().getFullYear();
       <li><a href="/impressum/">Impressum</a></li>
     </ul>
 
-    <p class="site-footer__legal">
-      © {year} <a href={AUTHOR.url}>{AUTHOR.name}</a> · MIT
-    </p>
+    <p class="site-footer__legal">© {year} {CLUB.name}</p>
   </div>
 </footer>
 

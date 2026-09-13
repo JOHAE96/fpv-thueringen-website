@@ -1,9 +1,10 @@
 /**
- * Sumi — site configuration
+ * FPV Thüringen e.V. — site configuration
  *
- * This is the only file you need to edit to make the theme yours. Everything
+ * This is the only file you need to edit for site-wide settings. Everything
  * else reads from here: metadata, navigation, feeds, OG images and the ink
- * simulation on the home page.
+ * simulation on the home page. Based on the Astro theme Sumi
+ * (https://github.com/kpab/astro-sumi, MIT) — see AGENTS.md/README.md.
  */
 
 export interface NavItem {
@@ -19,29 +20,34 @@ export interface SocialLink {
 
 export const SITE = {
   /** Absolute origin of the deployed site. No trailing slash. */
-  url: "https://sumi.p4ni.com",
-  title: "Sumi",
+  url: "https://fpv-thueringen.de",
+  title: "FPV Thüringen e.V.",
   /**
-   * Short Japanese mark used for the vertical rail and the loading screen.
-   * Set to an empty string to drop the Japanese accents entirely.
+   * Short decorative mark used for the vertical rail and the loading screen
+   * in the original theme. Left empty on purpose — it was a Japanese
+   * character tied to the theme's own branding, unrelated to the club.
    */
-  titleMark: "墨",
-  tagline: "An Astro theme in ink and paper",
+  titleMark: "",
+  tagline: "FPV-Modellflugverein aus Thüringen",
   description:
-    "Sumi is a minimal Astro theme built around ink, washi paper and generous negative space. Dual light and dark themes, zero client JavaScript on article pages, and a WebGL ink simulation on the front page.",
+    "FPV Thüringen e.V. ist ein Verein für FPV-Modellflug in Thüringen: gemeinsame Flugtermine, Builds der Mitglieder, Wettbewerbe und Ausflüge.",
   /** BCP 47 language tag, written to <html lang>. */
-  lang: "en",
+  lang: "de",
   /** Used for og:locale. */
-  locale: "en_US",
+  locale: "de_DE",
   /** Fallback OG image, relative to public/. Used for pages without one. */
   defaultOgImage: "/og-default.png",
 } as const;
 
-export const AUTHOR = {
-  name: "kpab",
-  url: "https://github.com/kpab",
-  /** One or two sentences. Shown on /about and in structured data. */
-  bio: "Designer and developer working on quiet interfaces. Sumi is an attempt to give a blog the pacing of a printed page.",
+/**
+ * The club, used as the organisation in structured data (JSON-LD) and in the
+ * footer credit. Not a personal author — this site has no single byline.
+ */
+export const CLUB = {
+  name: "FPV Thüringen e.V.",
+  url: SITE.url,
+  /** Used for JSON-LD `address.addressRegion`. No street address published. */
+  region: "Thüringen",
 } as const;
 
 export const NAV: NavItem[] = [

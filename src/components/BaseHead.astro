@@ -1,7 +1,9 @@
 ---
-import { AUTHOR, SITE } from "../config";
+import { CLUB, SITE } from "../config";
 
 export interface ArticleMeta {
+  /** Bare article title, without the " — Site name" suffix used in <title>. */
+  headline: string;
   publishedTime: string;
   modifiedTime?: string;
   tags: string[];
@@ -21,37 +23,43 @@ const { title, description, ogImage, article } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const image = new URL(ogImage ?? SITE.defaultOgImage, Astro.site);
 
-const person = {
-  "@type": "Person",
-  name: AUTHOR.name,
-  url: AUTHOR.url,
+const club = {
+  "@type": "SportsClub" as const,
+  name: CLUB.name,
+  url: CLUB.url,
 };
 
-const structuredData = article
-  ? {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: title,
-      description,
-      url: canonical.href,
-      image: image.href,
-      datePublished: article.publishedTime,
-      dateModified: article.modifiedTime ?? article.publishedTime,
-      keywords: article.tags.join(", "),
-      inLanguage: SITE.lang,
-      author: person,
-      publisher: person,
-      mainEntityOfPage: { "@type": "WebPage", "@id": canonical.href },
-    }
-  : {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: SITE.title,
-      description: SITE.description,
-      url: SITE.url,
-      inLanguage: SITE.lang,
-      author: person,
-    };
+/**
+ * Every page carries a SportsClub object (club name, region, URL) so search
+ * engines and assistants can identify the site as belonging to the club.
+ * Article pages additionally carry a BlogPosting object — the two are always
+ * emitted together there, not as alternatives.
+ */
+const organization = {
+  "@context": "https://schema.org",
+  ...club,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: CLUB.region,
+    addressCountry: "DE",
+  },
+};
+
+const blogPosting = article && {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: article.headline,
+  description,
+  url: canonical.href,
+  image: image.href,
+  datePublished: article.publishedTime,
+  dateModified: article.modifiedTime ?? article.publishedTime,
+  keywords: article.tags.join(", "),
+  inLanguage: SITE.lang,
+  author: club,
+  publisher: club,
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonical.href },
+};
 ---
 
 <meta charset="utf-8" />
@@ -127,7 +135,7 @@ const structuredData = article
           content={article.modifiedTime}
         />
       )}
-      <meta property="article:author" content={AUTHOR.name} />
+      <meta property="article:author" content={CLUB.name} />
       {article.tags.map((tag) => (
         <meta property="article:tag" content={tag} />
       ))}
@@ -143,5 +151,14 @@ const structuredData = article
 <script
   type="application/ld+json"
   is:inline
-  set:html={JSON.stringify(structuredData)}
+  set:html={JSON.stringify(organization)}
 />
+{
+  blogPosting && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(blogPosting)}
+    />
+  )
+}

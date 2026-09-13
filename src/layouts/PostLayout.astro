@@ -25,6 +25,7 @@ const { title, description, date, tags = [], cover } = post.data;
 const minutes = readingTime(post.body);
 
 const article = {
+  headline: title,
   publishedTime: isoDate(date),
   tags,
 };

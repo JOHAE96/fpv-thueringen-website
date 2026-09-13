@@ -1,7 +1,7 @@
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
 
-import { AUTHOR, SITE } from "../config";
+import { CLUB, SITE } from "../config";
 import { getPublishedPosts } from "../utils/posts";
 
 export const GET: APIRoute = async (context) => {
@@ -23,7 +23,7 @@ export const GET: APIRoute = async (context) => {
       pubDate: post.data.date,
       link: `/news/${post.id}/`,
       categories: post.data.tags ?? [],
-      customData: `<dc:creator><![CDATA[${AUTHOR.name}]]></dc:creator>`,
+      customData: `<dc:creator><![CDATA[${CLUB.name}]]></dc:creator>`,
     })),
     customData: `<language>${SITE.lang}</language>`,
   });

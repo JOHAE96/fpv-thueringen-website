@@ -17,15 +17,11 @@ const isCurrent = (href: string) =>
 <header class="site-header" data-overlay={overlay ? "" : undefined}>
   <a class="brand" href="/">
     <span class="brand__mark">{SITE.title}</span>
-    {
-      SITE.titleMark && (
-        <span class="brand__sub">{SITE.titleMark} — {SITE.tagline}</span>
-      )
-    }
+    <span class="brand__sub">{SITE.tagline}</span>
   </a>
 
   <div class="site-header__end">
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav" aria-label="Hauptnavigation">
       <ul class="nav__list">
         {
           NAV.map((item) => (
