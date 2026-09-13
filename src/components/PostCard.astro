@@ -1,5 +1,5 @@
 ---
-import { BLOG } from "../config";
+import { NEWS } from "../config";
 import { formatDateStamp, isoDate } from "../utils/date";
 import { readingTime } from "../utils/reading-time";
 import { tagSlug, type Post } from "../utils/posts";
@@ -9,19 +9,19 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, tags, draft } = post.data;
+const { title, description, date, tags = [], draft } = post.data;
 const minutes = readingTime(post.body);
 ---
 
 <article class="post-card">
   <p class="post-card__stamp label">
-    <time datetime={isoDate(pubDate)}>{formatDateStamp(pubDate)}</time>
-    {draft && <span class="post-card__draft">Draft</span>}
+    <time datetime={isoDate(date)}>{formatDateStamp(date)}</time>
+    {draft && <span class="post-card__draft">Entwurf</span>}
   </p>
 
   <div class="post-card__body">
     <h3 class="post-card__title">
-      <a href={`/blog/${post.id}/`}>{title}</a>
+      <a href={`/news/${post.id}/`}>{title}</a>
     </h3>
 
     <p class="post-card__description">{description}</p>
@@ -29,14 +29,14 @@ const minutes = readingTime(post.body);
     <p class="post-card__meta label">
       {
         tags.map((tag) => (
-          <a class="post-card__tag" href={`/tags/${tagSlug(tag)}/`}>
+          <a class="post-card__tag" href={`/news/tags/${tagSlug(tag)}/`}>
             #{tag}
           </a>
         ))
       }
       {
-        BLOG.showReadingTime && (
-          <span class="post-card__time">{minutes} min read</span>
+        NEWS.showReadingTime && (
+          <span class="post-card__time">{minutes} Min. Lesezeit</span>
         )
       }
     </p>

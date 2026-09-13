@@ -45,30 +45,39 @@ export const AUTHOR = {
 } as const;
 
 export const NAV: NavItem[] = [
-  { label: "Blog", href: "/blog" },
-  { label: "Tags", href: "/tags" },
-  { label: "About", href: "/about" },
+  { label: "News", href: "/news" },
+  { label: "Builds", href: "/builds" },
+  { label: "Videos", href: "/videos" },
+  { label: "Verein", href: "/verein" },
+  { label: "Community", href: "/community" },
+  { label: "FAQ", href: "/faqs" },
 ];
 
-export const SOCIAL: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/kpab/astro-sumi" },
-];
+/**
+ * Optional external links (Discord, Instagram, …) shown in the footer next to
+ * the RSS link. Leave empty if there is nothing to link yet.
+ */
+export const SOCIAL: SocialLink[] = [];
 
-export const BLOG = {
+export const NEWS = {
   /**
-   * Posts per page on /blog and the tag archives. Deliberately low so that the
-   * bundled sample posts spill onto a second page; 8–12 suits a real archive.
+   * Posts per page on /news and the tag archives.
    */
-  postsPerPage: 4,
+  postsPerPage: 8,
   /** Latest posts shown on the home page. */
-  postsOnHome: 4,
-  /** Estimated reading speed used for the "N min read" label. */
-  wordsPerMinute: 220,
+  postsOnHome: 3,
+  /** Estimated reading speed used for the "N Min. Lesezeit" label. */
+  wordsPerMinute: 200,
   showReadingTime: true,
   /** Render the table of contents on article pages. */
   showTableOfContents: true,
   /** Minimum number of headings before the table of contents appears. */
   tocMinHeadings: 3,
+} as const;
+
+export const BUILDS = {
+  /** Latest builds shown on the home page. */
+  buildsOnHome: 3,
 } as const;
 
 /**

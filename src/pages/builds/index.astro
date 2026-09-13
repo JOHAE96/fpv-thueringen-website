@@ -1,0 +1,42 @@
+---
+import BuildCard from "../../components/BuildCard.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getAllBuilds } from "../../utils/builds";
+
+const builds = await getAllBuilds();
+---
+
+<BaseLayout
+  title="Builds"
+  description="Drohnen-Builds der Vereinsmitglieder — Komponenten, Gewicht und Erfahrungen."
+>
+  <div class="wrap">
+    <PageHeader
+      eyebrow="Werkstatt"
+      title="Builds"
+      lede="Die Drohnen unserer Mitglieder: welche Komponenten verbaut sind, wie schwer sie sind und wie sie fliegen."
+    />
+
+    {
+      builds.length > 0 ? (
+        <div class="build-grid rule-grid">
+          {builds.map((build) => <BuildCard build={build} />)}
+        </div>
+      ) : (
+        <p class="lede build-grid__empty">Noch keine Builds veröffentlicht.</p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .build-grid {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    margin-top: var(--space-12);
+  }
+
+  .build-grid__empty {
+    margin-top: var(--space-12);
+  }
+</style>

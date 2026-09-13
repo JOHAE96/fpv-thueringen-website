@@ -11,10 +11,10 @@ const { previous, next } = Astro.props;
 
 {
   (previous || next) && (
-    <nav class="post-nav" aria-label="More posts">
+    <nav class="post-nav" aria-label="Weitere Beiträge">
       {previous ? (
-        <a class="post-nav__link" href={`/blog/${previous.id}/`} rel="prev">
-          <span class="post-nav__label label">← Previous</span>
+        <a class="post-nav__link" href={`/news/${previous.id}/`} rel="prev">
+          <span class="post-nav__label label">← Vorheriger</span>
           <span class="post-nav__title">{previous.data.title}</span>
         </a>
       ) : (
@@ -24,10 +24,10 @@ const { previous, next } = Astro.props;
       {next && (
         <a
           class="post-nav__link post-nav__link--next"
-          href={`/blog/${next.id}/`}
+          href={`/news/${next.id}/`}
           rel="next"
         >
-          <span class="post-nav__label label">Next →</span>
+          <span class="post-nav__label label">Nächster →</span>
           <span class="post-nav__title">{next.data.title}</span>
         </a>
       )}

@@ -1,38 +1,33 @@
 ---
+import BuildCard from "../components/BuildCard.astro";
 import FluidInk from "../components/FluidInk.astro";
 import PostCard from "../components/PostCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BLOG, INK, SITE } from "../config";
+import { BUILDS, INK, NEWS, SITE } from "../config";
+import { getAllBuilds } from "../utils/builds";
 import { getPublishedPosts } from "../utils/posts";
 
-const posts = (await getPublishedPosts()).slice(0, BLOG.postsOnHome);
+const posts = (await getPublishedPosts()).slice(0, NEWS.postsOnHome);
+const builds = (await getAllBuilds()).slice(0, BUILDS.buildsOnHome);
 ---
 
 <BaseLayout overlayHeader>
   <FluidInk variant="hero" enabled={INK.hero}>
     <div class="hero">
-      <p class="hero__eyebrow">An Astro 7 theme</p>
+      <p class="hero__eyebrow">FPV-Modellflugverein aus Thüringen</p>
       <h1 class="hero__title">{SITE.title}</h1>
       <p class="hero__lede">{SITE.tagline}</p>
       <p class="hero__cta">
-        <a href="/blog/">Read the blog ↓</a>
+        <a href="/verein/">Mitglied werden ↓</a>
       </p>
     </div>
-
-    {
-      SITE.titleMark && (
-        <p class="hero__rail tategaki" aria-hidden="true">
-          墨と水 — INK IN WATER
-        </p>
-      )
-    }
 
     {
       INK.hero && (
         <p class="hero__notes" aria-hidden="true">
           <span>Navier–Stokes / WebGL2</span>
-          <span class="hero__notes-mid">Scroll ↓</span>
-          <span>Move — stir the ink</span>
+          <span class="hero__notes-mid">Scrollen ↓</span>
+          <span>Bewegen — Tusche verrühren</span>
         </p>
       )
     }
@@ -40,8 +35,8 @@ const posts = (await getPublishedPosts()).slice(0, BLOG.postsOnHome);
 
   <section class="section wrap">
     <div class="latest__head">
-      <h2 class="eyebrow">Latest</h2>
-      <a class="latest__all label" href="/blog/">All posts →</a>
+      <h2 class="eyebrow">Aktuelles</h2>
+      <a class="latest__all label" href="/news/">Alle News →</a>
     </div>
 
     <div class="latest__list">
@@ -52,10 +47,21 @@ const posts = (await getPublishedPosts()).slice(0, BLOG.postsOnHome);
   {
     INK.divider && (
       <FluidInk variant="divider" strength={INK.strength * 0.7}>
-        <p class="divider__label label">墨 — Ink and paper</p>
+        <p class="divider__label label">Tusche und Papier</p>
       </FluidInk>
     )
   }
+
+  <section class="section wrap">
+    <div class="latest__head">
+      <h2 class="eyebrow">Builds</h2>
+      <a class="latest__all label" href="/builds/">Alle Builds →</a>
+    </div>
+
+    <div class="build-grid rule-grid">
+      {builds.map((build) => <BuildCard build={build} />)}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -114,13 +120,6 @@ const posts = (await getPublishedPosts()).slice(0, BLOG.postsOnHome);
     color: var(--color-accent-fg);
   }
 
-  .hero__rail {
-    position: absolute;
-    top: 50%;
-    right: var(--gutter);
-    translate: 0 -50%;
-  }
-
   /* These describe the simulation, so they only appear once it has actually
      started — not when it declined for reduced motion or missing WebGL2. The
      element tags itself with data-ink-active on boot. */
@@ -163,13 +162,17 @@ const posts = (await getPublishedPosts()).slice(0, BLOG.postsOnHome);
     border-bottom: none;
   }
 
+  .build-grid {
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    margin-top: var(--space-6);
+  }
+
   .divider__label {
     margin: auto;
     text-align: center;
   }
 
   @media (max-width: 55rem) {
-    .hero__rail,
     .hero__notes-mid {
       display: none;
     }

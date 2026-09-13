@@ -1,7 +1,7 @@
 ---
 import type { MarkdownHeading } from "astro";
 
-import { BLOG } from "../config";
+import { NEWS } from "../config";
 
 interface Props {
   headings: MarkdownHeading[];
@@ -12,14 +12,14 @@ const items = Astro.props.headings.filter(
   (heading) => heading.depth >= 2 && heading.depth <= 3,
 );
 
-const show = BLOG.showTableOfContents && items.length >= BLOG.tocMinHeadings;
+const show = NEWS.showTableOfContents && items.length >= NEWS.tocMinHeadings;
 ---
 
 {
   show && (
     <nav class="toc" aria-labelledby="toc-heading">
       <h2 class="toc__heading label" id="toc-heading">
-        Contents
+        Inhalt
       </h2>
       <ol class="toc__list">
         {items.map((heading) => (

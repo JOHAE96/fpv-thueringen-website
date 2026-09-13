@@ -5,12 +5,12 @@ import PageHeader from "../../components/PageHeader.astro";
 import Pagination from "../../components/Pagination.astro";
 import PostCard from "../../components/PostCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { BLOG } from "../../config";
+import { NEWS } from "../../config";
 import { getPublishedPosts, type Post } from "../../utils/posts";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getPublishedPosts();
-  return paginate(posts, { pageSize: BLOG.postsPerPage });
+  return paginate(posts, { pageSize: NEWS.postsPerPage });
 }) satisfies GetStaticPaths;
 
 interface Props {
@@ -19,25 +19,26 @@ interface Props {
 
 const { page } = Astro.props;
 
-const title = page.currentPage > 1 ? `Blog — page ${page.currentPage}` : "Blog";
+const title =
+  page.currentPage > 1 ? `News — Seite ${page.currentPage}` : "News";
 ---
 
 <BaseLayout
   title={title}
-  description="Essays on design, typography and building for the web."
+  description="Neuigkeiten, Berichte von Treffen und Wettbewerben rund um den Verein."
 >
   <div class="wrap">
     <PageHeader
-      eyebrow="Writing"
-      title="Blog"
-      lede="Notes on design, typography, and the parts of building for the web that reward slowing down."
+      eyebrow="Aktuelles"
+      title="News"
+      lede="Berichte von Treffen, Wettbewerben und Ausflügen — neueste zuerst."
     />
 
     <div class="post-list">
       {page.data.map((post) => <PostCard post={post} />)}
     </div>
 
-    <Pagination page={page} label="Blog posts" />
+    <Pagination page={page} label="News" />
   </div>
 </BaseLayout>
 

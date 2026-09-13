@@ -1,0 +1,59 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+
+import "../styles/prose.css";
+import PageHeader from "../components/PageHeader.astro";
+import VideoCard from "../components/VideoCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const entry = await getEntry("pages", "videos");
+if (!entry) {
+  throw new Error("Content collection entry pages/videos.md fehlt.");
+}
+
+const { Content } = await render(entry);
+
+const videos = (await getCollection("videos")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <div class="wrap">
+    <PageHeader eyebrow="Videos" title={entry.data.title} />
+
+    <div class="prose videos__intro">
+      <Content />
+    </div>
+
+    {
+      videos.length > 0 ? (
+        <div class="video-grid">
+          {videos.map((video) => <VideoCard video={video} />)}
+        </div>
+      ) : (
+        <p class="lede videos__empty">Noch keine Videos verlinkt.</p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .videos__intro {
+    max-width: var(--width-prose);
+    padding-block: var(--space-8) var(--space-4);
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-8);
+    padding-bottom: var(--space-16);
+  }
+
+  .videos__empty {
+    margin-top: var(--space-8);
+    padding-bottom: var(--space-16);
+  }
+</style>

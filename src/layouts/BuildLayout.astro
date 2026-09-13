@@ -1,0 +1,126 @@
+---
+import { Image } from "astro:assets";
+
+import "../styles/prose.css";
+
+import BuildSpecs from "../components/BuildSpecs.astro";
+import BaseLayout from "./BaseLayout.astro";
+import { formatDate, isoDate } from "../utils/date";
+import type { Build } from "../utils/builds";
+
+interface Props {
+  build: Build;
+}
+
+const { build } = Astro.props;
+const {
+  title,
+  description,
+  date,
+  pilot,
+  cover,
+  components,
+  extraComponents,
+  weight,
+  weightWithBattery,
+} = build.data;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="build wrap">
+    <header class="build__header">
+      <p class="build__stamp eyebrow">
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+        {pilot && <span> · {pilot}</span>}
+      </p>
+
+      <h1 class="build__title">{title}</h1>
+      <p class="lede build__lede">{description}</p>
+    </header>
+
+    {
+      cover && (
+        <figure class="build__cover">
+          <Image
+            src={cover}
+            alt={title}
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 60rem) 60rem, 100vw"
+            loading="eager"
+          />
+        </figure>
+      )
+    }
+
+    <div class="build__grid">
+      <div class="prose build__body">
+        <slot />
+      </div>
+
+      <aside class="build__aside">
+        <h2 class="build__aside-heading label">Komponenten</h2>
+        <BuildSpecs
+          components={components}
+          extraComponents={extraComponents}
+          weight={weight}
+          weightWithBattery={weightWithBattery}
+        />
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .build__header {
+    max-width: var(--width-prose);
+    padding-block: var(--space-12) var(--space-8);
+  }
+
+  .build__title {
+    margin-top: var(--space-4);
+    font-size: var(--text-2xl);
+  }
+
+  .build__lede {
+    margin-top: var(--space-6);
+  }
+
+  .build__cover {
+    margin-bottom: var(--space-12);
+  }
+
+  .build__grid {
+    display: grid;
+    grid-template-columns: minmax(0, var(--width-prose)) 18rem;
+    gap: clamp(var(--space-8), 6vw, var(--space-16));
+    justify-content: center;
+    align-items: start;
+    padding-top: var(--space-8);
+    border-top: var(--rule-width) solid var(--color-rule);
+  }
+
+  .build__aside {
+    grid-area: 1 / 2;
+  }
+
+  .build__aside-heading {
+    display: block;
+    margin-bottom: var(--space-4);
+  }
+
+  .build__body {
+    grid-area: 1 / 1;
+  }
+
+  @media (max-width: 60rem) {
+    .build__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .build__aside,
+    .build__body {
+      grid-area: auto;
+    }
+  }
+</style>

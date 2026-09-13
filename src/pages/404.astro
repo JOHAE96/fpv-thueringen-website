@@ -3,22 +3,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="Page not found"
-  description="That page does not exist, or has moved."
+  title="Seite nicht gefunden"
+  description="Diese Seite existiert nicht oder wurde verschoben."
 >
   <section class="notfound wrap">
     <p class="notfound__code" aria-hidden="true">404</p>
-    <p class="notfound__mark" aria-hidden="true">無</p>
 
-    <h1 class="notfound__title">Nothing here</h1>
+    <h1 class="notfound__title">Hier ist nichts</h1>
     <p class="lede notfound__lede">
-      The page you asked for does not exist, or has moved somewhere quieter.
+      Die gesuchte Seite existiert nicht oder wurde verschoben.
     </p>
 
     <p class="notfound__actions label">
-      <a href="/">Home</a>
+      <a href="/">Startseite</a>
       <span aria-hidden="true">·</span>
-      <a href="/blog/">All posts</a>
+      <a href="/news/">News</a>
+      <span aria-hidden="true">·</span>
+      <a href="/builds/">Builds</a>
     </p>
   </section>
 </BaseLayout>
@@ -38,13 +39,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-wide);
     color: var(--color-accent);
-  }
-
-  .notfound__mark {
-    margin-top: var(--space-6);
-    font-size: clamp(5rem, 18vw, 9rem);
-    line-height: 1;
-    color: var(--color-fg-faint);
   }
 
   .notfound__title {

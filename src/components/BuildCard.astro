@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+
+import { formatDateStamp, isoDate } from "../utils/date";
+import { formatWeight, type Build } from "../utils/builds";
+
+interface Props {
+  build: Build;
+}
+
+const { build } = Astro.props;
+const { title, description, date, cover, weight } = build.data;
+---
+
+<article class="build-card">
+  {
+    cover && (
+      <a class="build-card__cover" href={`/builds/${build.id}/`} tabindex="-1">
+        <Image
+          src={cover}
+          alt=""
+          width={480}
+          height={320}
+          loading="lazy"
+        />
+      </a>
+    )
+  }
+
+  <div class="build-card__body">
+    <p class="build-card__stamp label">
+      <time datetime={isoDate(date)}>{formatDateStamp(date)}</time>
+      {weight !== undefined && <span>· {formatWeight(weight)}</span>}
+    </p>
+
+    <h3 class="build-card__title">
+      <a href={`/builds/${build.id}/`}>{title}</a>
+    </h3>
+
+    <p class="build-card__description">{description}</p>
+  </div>
+</article>
+
+<style>
+  .build-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .build-card:hover {
+    background: var(--color-bg-subtle);
+  }
+
+  .build-card__cover {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  .build-card__cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .build-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+  }
+
+  .build-card__stamp {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .build-card__title {
+    margin-top: var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .build-card__title a {
+    text-decoration: none;
+  }
+
+  .build-card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .build-card__description {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+</style>

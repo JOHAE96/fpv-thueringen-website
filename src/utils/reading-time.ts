@@ -1,4 +1,4 @@
-import { BLOG } from "../config";
+import { NEWS } from "../config";
 
 const CJK = /[぀-ヿ㐀-䶿一-鿿豈-﫿]/g;
 /** Fenced code, inline code and MDX import lines skew the count badly. */
@@ -24,6 +24,6 @@ export function readingTime(body: string | undefined): number {
     .split(/\s+/)
     .filter(Boolean).length;
 
-  const minutes = words / BLOG.wordsPerMinute + cjkCount / CJK_PER_MINUTE;
+  const minutes = words / NEWS.wordsPerMinute + cjkCount / CJK_PER_MINUTE;
   return Math.max(1, Math.round(minutes));
 }

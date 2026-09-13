@@ -89,7 +89,7 @@ const videos = defineCollection({
     z.object({
       title: z.string(),
       /** External YouTube link — opened in a new tab, never embedded. */
-      url: z.string().url(),
+      url: z.url(),
       thumbnail: image(),
       date: z.coerce.date(),
       pilot: z.string().optional(),

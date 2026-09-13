@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from "astro:content";
+
+import "../styles/prose.css";
+import PageHeader from "../components/PageHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const faqs = await getCollection("faqs");
+faqs.sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  faqs.map(async (faq) => ({ faq, ...(await render(faq)) })),
+);
+---
+
+<BaseLayout
+  title="FAQ"
+  description="Häufig gestellte Fragen rund um den Verein und FPV-Modellflug."
+>
+  <div class="wrap">
+    <PageHeader
+      eyebrow="Hilfe"
+      title="FAQ"
+      lede="Häufig gestellte Fragen — zum Aufklappen, ganz ohne JavaScript."
+    />
+
+    <div class="faq-list">
+      {
+        rendered.map(({ faq, Content }) => (
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              {faq.data.question}
+              {faq.data.category && (
+                <span class="faq-item__category label">
+                  {faq.data.category}
+                </span>
+              )}
+            </summary>
+            <div class="prose faq-item__answer">
+              <Content />
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .faq-list {
+    max-width: var(--width-prose);
+    margin-top: var(--space-12);
+  }
+
+  .faq-item {
+    padding-block: var(--space-6);
+    border-bottom: var(--rule-width) solid var(--color-rule);
+  }
+
+  .faq-item__question {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .faq-item__question::marker {
+    color: var(--color-accent);
+  }
+
+  .faq-item__category {
+    flex-shrink: 0;
+  }
+
+  .faq-item__answer {
+    margin-top: var(--space-4);
+    font-size: var(--text-base);
+  }
+</style>

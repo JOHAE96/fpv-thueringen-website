@@ -1,17 +1,17 @@
 ---
 import type { GetStaticPaths, Page } from "astro";
 
-import PageHeader from "../../../components/PageHeader.astro";
-import Pagination from "../../../components/Pagination.astro";
-import PostCard from "../../../components/PostCard.astro";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { BLOG } from "../../../config";
+import PageHeader from "../../../../components/PageHeader.astro";
+import Pagination from "../../../../components/Pagination.astro";
+import PostCard from "../../../../components/PostCard.astro";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { NEWS } from "../../../../config";
 import {
   collectTags,
   getPublishedPosts,
   postsByTag,
   type Post,
-} from "../../../utils/posts";
+} from "../../../../utils/posts";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getPublishedPosts();
@@ -19,7 +19,7 @@ export const getStaticPaths = (async ({ paginate }) => {
   return collectTags(posts).flatMap((tag) =>
     paginate(postsByTag(posts, tag.slug), {
       params: { tag: tag.slug },
-      pageSize: BLOG.postsPerPage,
+      pageSize: NEWS.postsPerPage,
       props: { tagName: tag.name },
     }),
   );
@@ -32,21 +32,21 @@ interface Props {
 
 const { page, tagName } = Astro.props;
 
-const suffix = page.currentPage > 1 ? ` — page ${page.currentPage}` : "";
+const suffix = page.currentPage > 1 ? ` — Seite ${page.currentPage}` : "";
 ---
 
 <BaseLayout
   title={`#${tagName}${suffix}`}
-  description={`Posts tagged ${tagName}.`}
+  description={`Beiträge mit dem Tag ${tagName}.`}
 >
   <div class="wrap">
     <PageHeader
-      eyebrow="Tagged"
+      eyebrow="Getaggt"
       title={`#${tagName}`}
-      lede={`${page.total} ${page.total === 1 ? "post" : "posts"} under this tag.`}
+      lede={`${page.total} ${page.total === 1 ? "Beitrag" : "Beiträge"} unter diesem Tag.`}
     >
       <p class="tag-page__back label">
-        <a href="/tags/">← All tags</a>
+        <a href="/news/tags/">← Alle Tags</a>
       </p>
     </PageHeader>
 
@@ -54,7 +54,7 @@ const suffix = page.currentPage > 1 ? ` — page ${page.currentPage}` : "";
       {page.data.map((post) => <PostCard post={post} />)}
     </div>
 
-    <Pagination page={page} label={`Posts tagged ${tagName}`} />
+    <Pagination page={page} label={`Beiträge mit #${tagName}`} />
   </div>
 </BaseLayout>
 

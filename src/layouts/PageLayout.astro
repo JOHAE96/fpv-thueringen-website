@@ -1,0 +1,32 @@
+---
+import "../styles/prose.css";
+
+import PageHeader from "../components/PageHeader.astro";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Small monospace line above the title, e.g. "Verein". */
+  eyebrow?: string;
+}
+
+const { title, description, eyebrow } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="wrap">
+    <PageHeader eyebrow={eyebrow} title={title} />
+
+    <div class="prose page-content">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: var(--width-prose);
+    padding-block: var(--space-8) var(--space-16);
+  }
+</style>

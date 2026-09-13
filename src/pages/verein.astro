@@ -1,0 +1,20 @@
+---
+import { getEntry, render } from "astro:content";
+
+import PageLayout from "../layouts/PageLayout.astro";
+
+const entry = await getEntry("pages", "verein");
+if (!entry) {
+  throw new Error("Content collection entry pages/verein.md fehlt.");
+}
+
+const { Content } = await render(entry);
+---
+
+<PageLayout
+  eyebrow="Verein"
+  title={entry.data.title}
+  description={entry.data.description}
+>
+  <Content />
+</PageLayout>

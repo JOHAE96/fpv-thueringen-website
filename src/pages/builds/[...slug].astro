@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+
+import BuildLayout from "../../layouts/BuildLayout.astro";
+import { getAllBuilds, type Build } from "../../utils/builds";
+
+export const getStaticPaths = (async () => {
+  const builds = await getAllBuilds();
+
+  return builds.map((build) => ({
+    params: { slug: build.id },
+    props: { build },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  build: Build;
+}
+
+const { build } = Astro.props;
+const { Content } = await render(build);
+---
+
+<BuildLayout build={build}>
+  <Content />
+</BuildLayout>

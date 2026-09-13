@@ -20,9 +20,9 @@ export const GET: APIRoute = async (context) => {
       // Summaries only. Rendering MDX bodies into the feed needs the container
       // API and pulls the whole component runtime into the build.
       description: post.data.description,
-      pubDate: post.data.pubDate,
-      link: `/blog/${post.id}/`,
-      categories: post.data.tags,
+      pubDate: post.data.date,
+      link: `/news/${post.id}/`,
+      categories: post.data.tags ?? [],
       customData: `<dc:creator><![CDATA[${AUTHOR.name}]]></dc:creator>`,
     })),
     customData: `<language>${SITE.lang}</language>`,

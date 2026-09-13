@@ -1,0 +1,85 @@
+---
+import { formatWeight } from "../utils/builds";
+import type { Build } from "../utils/builds";
+
+interface Props {
+  components: Build["data"]["components"];
+  extraComponents?: Build["data"]["extraComponents"];
+  weight?: number;
+  weightWithBattery?: number;
+}
+
+const { components, extraComponents, weight, weightWithBattery } =
+  Astro.props;
+
+/**
+ * Fixed rendering order and German labels, independent of the order fields
+ * happen to appear in a given build's frontmatter. Every field is optional —
+ * only the ones actually set produce a row, so a build without e.g. a
+ * separate receiver renders no empty term/definition pair for it.
+ */
+const rows: Array<{ label: string; value?: string }> = [
+  { label: "Frame", value: components.frame },
+  { label: "Stack", value: components.stack },
+  { label: "Empfänger", value: components.receiver },
+  { label: "VTX", value: components.vtx },
+  { label: "VTX-Antenne", value: components.vtxAntenna },
+  { label: "Motoren", value: components.motors },
+  { label: "Props", value: components.props },
+  { label: "Kamera", value: components.cam },
+  { label: "Akku", value: components.battery },
+  { label: "Gewicht", value: weight !== undefined ? formatWeight(weight) : undefined },
+  {
+    label: "Gewicht mit Akku",
+    value:
+      weightWithBattery !== undefined
+        ? formatWeight(weightWithBattery)
+        : undefined,
+  },
+  ...Object.entries(extraComponents ?? {}).map(([label, value]) => ({
+    label,
+    value,
+  })),
+].filter((row): row is { label: string; value: string } => Boolean(row.value));
+---
+
+{
+  rows.length > 0 && (
+    <dl class="build-specs">
+      {rows.map((row) => (
+        <div class="build-specs__row">
+          <dt class="build-specs__label label">{row.label}</dt>
+          <dd class="build-specs__value">{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+<style>
+  .build-specs {
+    display: grid;
+    gap: var(--rule-width);
+    background: var(--color-rule);
+    border: var(--rule-width) solid var(--color-rule);
+  }
+
+  .build-specs__row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-6);
+    background: var(--color-bg);
+  }
+
+  .build-specs__value {
+    margin: 0;
+  }
+
+  @media (max-width: 30rem) {
+    .build-specs__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>
