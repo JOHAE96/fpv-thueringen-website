@@ -1,0 +1,10 @@
+# Weiterleitungen für alte WordPress-URLs auf die neue Struktur.
+#
+# Format (unterstützt u. a. von Netlify und Cloudflare Pages):
+#   /alter-pfad  /neuer-pfad  301
+#
+# Auskommentiertes Beispiel — bei Bedarf aktivieren und an die tatsächliche
+# alte URL-Struktur anpassen:
+# /?p=123              /news/ein-beitrag/          301
+# /category/berichte/  /news/                       301
+# /wp-content/uploads/*  /                          301

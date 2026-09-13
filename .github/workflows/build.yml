@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Type check and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v7
+        with:
+          # Astro supports even-numbered releases only.
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm run check
+
+      - name: Build
+        run: pnpm run build
+
+      # ---------------------------------------------------------------------
+      # TODO(deployment): Kein Hosting-Anbieter festgelegt.
+      #
+      # Der Job baut die Seite und legt dist/ als Artifact ab, deployt aber
+      # noch nirgendwohin. Sobald ein Hoster feststeht, hier einen
+      # Deploy-Step ergänzen, zum Beispiel:
+      #
+      #   - Cloudflare Pages:  cloudflare/wrangler-action
+      #   - Netlify:           netlify/actions/cli oder ein Deploy-Hook
+      #   - GitHub Pages:      actions/deploy-pages (zusammen mit
+      #                        actions/upload-pages-artifact statt des
+      #                        generischen Artifacts unten)
+      #   - Eigener Server:    z. B. rsync/scp von dist/ per SSH-Action
+      #
+      # Bis dahin lässt sich dist/ manuell aus dem Artifact-Anhang dieses
+      # Workflow-Laufs herunterladen und von Hand hochladen.
+      # ---------------------------------------------------------------------
+      - name: Build als Artifact ablegen
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 14
