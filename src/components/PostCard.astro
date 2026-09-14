@@ -3,6 +3,7 @@ import { NEWS } from "../config";
 import { formatDateStamp, isoDate } from "../utils/date";
 import { readingTime } from "../utils/reading-time";
 import { tagSlug, type Post } from "../utils/posts";
+import { withBase } from "../utils/url";
 
 interface Props {
   post: Post;
@@ -21,7 +22,7 @@ const minutes = readingTime(post.body);
 
   <div class="post-card__body">
     <h3 class="post-card__title">
-      <a href={`/news/${post.id}/`}>{title}</a>
+      <a href={withBase(`/news/${post.id}/`)}>{title}</a>
     </h3>
 
     <p class="post-card__description">{description}</p>
@@ -29,7 +30,7 @@ const minutes = readingTime(post.body);
     <p class="post-card__meta label">
       {
         tags.map((tag) => (
-          <a class="post-card__tag" href={`/news/tags/${tagSlug(tag)}/`}>
+          <a class="post-card__tag" href={withBase(`/news/tags/${tagSlug(tag)}/`)}>
             #{tag}
           </a>
         ))

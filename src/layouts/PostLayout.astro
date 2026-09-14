@@ -11,6 +11,7 @@ import { NEWS, OG } from "../config";
 import { formatDate, isoDate } from "../utils/date";
 import { readingTime } from "../utils/reading-time";
 import { tagSlug, type Post } from "../utils/posts";
+import { withBase } from "../utils/url";
 
 interface Props {
   post: Post;
@@ -49,7 +50,7 @@ const article = {
       <p class="post__meta label">
         {
           tags.map((tag) => (
-            <a class="post__tag" href={`/news/tags/${tagSlug(tag)}/`}>
+            <a class="post__tag" href={withBase(`/news/tags/${tagSlug(tag)}/`)}>
               #{tag}
             </a>
           ))

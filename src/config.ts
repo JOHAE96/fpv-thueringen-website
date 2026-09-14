@@ -18,9 +18,18 @@ export interface SocialLink {
   href: string;
 }
 
+/**
+ * Path the site is served under on GitHub Pages (a project page, not a
+ * `<user>.github.io` root repo), e.g. `https://johae96.github.io/fpv-thueringen-website/`.
+ * Passed to Astro's `base` config and used to build the club's canonical
+ * URL below — the rest of the app derives base-aware links from
+ * `import.meta.env.BASE_URL` at runtime instead (see src/utils/url.ts).
+ */
+export const BASE_PATH = "/fpv-thueringen-website";
+
 export const SITE = {
-  /** Absolute origin of the deployed site. No trailing slash. */
-  url: "https://fpv-thueringen.de",
+  /** Bare origin of the deployed site — no path, no trailing slash. */
+  url: "https://johae96.github.io",
   title: "FPV Thüringen e.V.",
   /**
    * Short decorative mark used for the vertical rail and the loading screen
@@ -45,7 +54,7 @@ export const SITE = {
  */
 export const CLUB = {
   name: "FPV Thüringen e.V.",
-  url: SITE.url,
+  url: `${SITE.url}${BASE_PATH}`,
   /** Used for JSON-LD `address.addressRegion`. No street address published. */
   region: "Thüringen",
 } as const;

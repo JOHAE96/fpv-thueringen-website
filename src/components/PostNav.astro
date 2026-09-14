@@ -1,5 +1,6 @@
 ---
 import type { Post } from "../utils/posts";
+import { withBase } from "../utils/url";
 
 interface Props {
   previous?: Post;
@@ -13,7 +14,7 @@ const { previous, next } = Astro.props;
   (previous || next) && (
     <nav class="post-nav" aria-label="Weitere Beiträge">
       {previous ? (
-        <a class="post-nav__link" href={`/news/${previous.id}/`} rel="prev">
+        <a class="post-nav__link" href={withBase(`/news/${previous.id}/`)} rel="prev">
           <span class="post-nav__label label">← Vorheriger</span>
           <span class="post-nav__title">{previous.data.title}</span>
         </a>
@@ -24,7 +25,7 @@ const { previous, next } = Astro.props;
       {next && (
         <a
           class="post-nav__link post-nav__link--next"
-          href={`/news/${next.id}/`}
+          href={withBase(`/news/${next.id}/`)}
           rel="next"
         >
           <span class="post-nav__label label">Nächster →</span>

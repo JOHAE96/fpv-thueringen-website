@@ -1,5 +1,6 @@
 ---
 import { CLUB, SITE } from "../config";
+import { absoluteUrl, withBase } from "../utils/url";
 
 export interface ArticleMeta {
   /** Bare article title, without the " — Site name" suffix used in <title>. */
@@ -21,7 +22,7 @@ interface Props {
 const { title, description, ogImage, article } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const image = new URL(ogImage ?? SITE.defaultOgImage, Astro.site);
+const image = absoluteUrl(ogImage ?? SITE.defaultOgImage, Astro.site!);
 
 const club = {
   "@type": "SportsClub" as const,
@@ -81,12 +82,12 @@ const blogPosting = article && {
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
 <link
   rel="alternate"
   type="application/rss+xml"
   title={`${SITE.title} — ${SITE.tagline}`}
-  href={new URL("rss.xml", Astro.site)}
+  href={absoluteUrl("/rss.xml", Astro.site!)}
 />
 <meta
   name="theme-color"
@@ -101,14 +102,14 @@ const blogPosting = article && {
 
 <link
   rel="preload"
-  href="/fonts/source-serif-4-latin.woff2"
+  href={withBase("/fonts/source-serif-4-latin.woff2")}
   as="font"
   type="font/woff2"
   crossorigin
 />
 <link
   rel="preload"
-  href="/fonts/jetbrains-mono-latin.woff2"
+  href={withBase("/fonts/jetbrains-mono-latin.woff2")}
   as="font"
   type="font/woff2"
   crossorigin

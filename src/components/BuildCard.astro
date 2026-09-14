@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 import { formatDateStamp, isoDate } from "../utils/date";
 import { formatWeight, type Build } from "../utils/builds";
+import { withBase } from "../utils/url";
 
 interface Props {
   build: Build;
@@ -15,7 +16,7 @@ const { title, description, date, cover, weight } = build.data;
 <article class="build-card">
   {
     cover && (
-      <a class="build-card__cover" href={`/builds/${build.id}/`} tabindex="-1">
+      <a class="build-card__cover" href={withBase(`/builds/${build.id}/`)} tabindex="-1">
         <Image
           src={cover}
           alt=""
@@ -34,7 +35,7 @@ const { title, description, date, cover, weight } = build.data;
     </p>
 
     <h3 class="build-card__title">
-      <a href={`/builds/${build.id}/`}>{title}</a>
+      <a href={withBase(`/builds/${build.id}/`)}>{title}</a>
     </h3>
 
     <p class="build-card__description">{description}</p>

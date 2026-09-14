@@ -1,5 +1,6 @@
 ---
 import { NAV, SITE } from "../config";
+import { withBase } from "../utils/url";
 import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
@@ -10,12 +11,16 @@ interface Props {
 const { overlay = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
-const isCurrent = (href: string) =>
-  path === href || (href !== "/" && path.startsWith(`${href}/`));
+const isCurrent = (href: string) => {
+  const normalized = withBase(href).replace(/\/$/, "") || "/";
+  return (
+    path === normalized || (normalized !== "/" && path.startsWith(`${normalized}/`))
+  );
+};
 ---
 
 <header class="site-header" data-overlay={overlay ? "" : undefined}>
-  <a class="brand" href="/">
+  <a class="brand" href={withBase("/")}>
     <span class="brand__mark">{SITE.title}</span>
     <span class="brand__sub">{SITE.tagline}</span>
   </a>
@@ -27,7 +32,7 @@ const isCurrent = (href: string) =>
           NAV.map((item) => (
             <li>
               <a
-                href={item.href}
+                href={withBase(item.href)}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
               >
                 {item.label}

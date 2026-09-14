@@ -1,17 +1,21 @@
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
-import { SITE } from "./src/config";
+import { BASE_PATH, SITE } from "./src/config";
+import { remarkBasePath } from "./src/plugins/remark-base-path";
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.url,
+  base: BASE_PATH,
   output: "static",
   integrations: [mdx(), sitemap()],
 
   markdown: {
+    processor: unified({ remarkPlugins: [remarkBasePath(BASE_PATH)] }),
     shikiConfig: {
       // Muted, low-chroma pair — the usual defaults are too blue next to ink
       // and vermilion.
