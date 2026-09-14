@@ -1,7 +1,7 @@
 ---
 title: "FPV-Thüringen beim IGOW 2026"
 date: 2026-03-27
-description: "Ein sonniger Samstag, acht Piloten und ein enges Finale — so lief unsere diesjährige Vereinsmeisterschaft."
+description: "Wir sind wieder dabei! Ein paar unserer Piloten treten beim International Game of Whoop 2026 an."
 tags: ["Wettbewerb"]
 cover: "./bilder/igow.png"
 draft: false
