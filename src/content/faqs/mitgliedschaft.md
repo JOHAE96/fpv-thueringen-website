@@ -1,5 +1,5 @@
 ---
-question: "Wie werde ich Mitglied?"
+question: "Wie werde ich Vereinsmitglied?"
 order: 1
 category: "Mitgliedschaft"
 ---
