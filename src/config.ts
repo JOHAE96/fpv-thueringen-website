@@ -37,7 +37,7 @@ export const SITE = {
    * character tied to the theme's own branding, unrelated to the club.
    */
   titleMark: "",
-  tagline: "FPV-Modellflugverein aus Thüringen",
+  tagline: "FPV-Piloten aus Thüringen",
   description:
     "FPV Thüringen e.V. ist ein Verein für FPV-Modellflug in Thüringen: gemeinsame Flugtermine, Builds der Mitglieder, Wettbewerbe und Ausflüge.",
   /** BCP 47 language tag, written to <html lang>. */
