@@ -1,11 +1,13 @@
 import type { APIRoute } from "astro";
 
+import { absoluteUrl } from "../utils/url";
+
 export const GET: APIRoute = ({ site }) => {
   const body = [
     "User-agent: *",
     "Allow: /",
     "",
-    `Sitemap: ${new URL("sitemap-index.xml", site)}`,
+    `Sitemap: ${absoluteUrl("/sitemap-index.xml", site!)}`,
     "",
   ].join("\n");
 

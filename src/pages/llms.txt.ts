@@ -5,6 +5,7 @@ import { SITE } from "../config";
 import { formatDate } from "../utils/date";
 import { getAllBuilds } from "../utils/builds";
 import { collectTags, getPublishedPosts } from "../utils/posts";
+import { absoluteUrl } from "../utils/url";
 
 /**
  * https://llmstxt.org — a plain-text index of the site for language models,
@@ -21,7 +22,7 @@ export const GET: APIRoute = async ({ site }) => {
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
 
-  const absolute = (path: string) => new URL(path, site).href;
+  const absolute = (path: string) => absoluteUrl(path, site!).href;
 
   const lines = [
     `# ${SITE.title}`,

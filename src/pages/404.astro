@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/url";
 ---
 
 <BaseLayout
@@ -15,11 +16,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </p>
 
     <p class="notfound__actions label">
-      <a href="/">Startseite</a>
+      <a href={withBase("/")}>Startseite</a>
       <span aria-hidden="true">·</span>
-      <a href="/news/">News</a>
+      <a href={withBase("/news/")}>News</a>
       <span aria-hidden="true">·</span>
-      <a href="/builds/">Builds</a>
+      <a href={withBase("/builds/")}>Builds</a>
     </p>
   </section>
 </BaseLayout>

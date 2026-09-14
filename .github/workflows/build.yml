@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+# Only one Pages deployment at a time; don't cancel one that's already
+# rolling out.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Type check and build
@@ -33,26 +39,27 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      # ---------------------------------------------------------------------
-      # TODO(deployment): Kein Hosting-Anbieter festgelegt.
-      #
-      # Der Job baut die Seite und legt dist/ als Artifact ab, deployt aber
-      # noch nirgendwohin. Sobald ein Hoster feststeht, hier einen
-      # Deploy-Step ergänzen, zum Beispiel:
-      #
-      #   - Cloudflare Pages:  cloudflare/wrangler-action
-      #   - Netlify:           netlify/actions/cli oder ein Deploy-Hook
-      #   - GitHub Pages:      actions/deploy-pages (zusammen mit
-      #                        actions/upload-pages-artifact statt des
-      #                        generischen Artifacts unten)
-      #   - Eigener Server:    z. B. rsync/scp von dist/ per SSH-Action
-      #
-      # Bis dahin lässt sich dist/ manuell aus dem Artifact-Anhang dieses
-      # Workflow-Laufs herunterladen und von Hand hochladen.
-      # ---------------------------------------------------------------------
-      - name: Build als Artifact ablegen
-        uses: actions/upload-artifact@v4
+      - name: Als Pages-Artifact ablegen
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
           path: dist/
-          retention-days: 14
+
+  # Deployt nur den main-Branch — Pull Requests bauen und prüfen zwar mit,
+  # veröffentlichen aber nicht.
+  deploy:
+    name: Auf GitHub Pages veröffentlichen
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

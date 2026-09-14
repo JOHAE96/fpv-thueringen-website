@@ -1,5 +1,5 @@
 import { visit } from "unist-util-visit";
-import type { Image, Link, Root } from "mdast";
+import type { Root } from "mdast";
 import type { Plugin } from "unified";
 
 /**
@@ -13,7 +13,7 @@ export function remarkBasePath(base: string): Plugin<[], Root> {
   const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
 
   return () => (tree: Root) => {
-    visit(tree, ["link", "image"], (node: Link | Image) => {
+    visit(tree, ["link", "image"] as const, (node) => {
       if (node.url.startsWith("/") && !node.url.startsWith("//")) {
         node.url = `${prefix}${node.url}`;
       }

@@ -12,6 +12,7 @@ import {
   postsByTag,
   type Post,
 } from "../../../../utils/posts";
+import { withBase } from "../../../../utils/url";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getPublishedPosts();
@@ -46,7 +47,7 @@ const suffix = page.currentPage > 1 ? ` — Seite ${page.currentPage}` : "";
       lede={`${page.total} ${page.total === 1 ? "Beitrag" : "Beiträge"} unter diesem Tag.`}
     >
       <p class="tag-page__back label">
-        <a href="/news/tags/">← Alle Tags</a>
+        <a href={withBase("/news/tags/")}>← Alle Tags</a>
       </p>
     </PageHeader>
 

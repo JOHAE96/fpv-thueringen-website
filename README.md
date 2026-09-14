@@ -154,11 +154,21 @@ Seite sollte vor dem Livegang von einer sachkundigen Person geprüft werden.
 
 ## Deployment
 
-`pnpm build` erzeugt einen fertigen, hostingneutralen `dist/`-Ordner (nur statische Dateien).
-Der Workflow unter [.github/workflows/build.yml](.github/workflows/build.yml) baut die Seite bei
-jedem Push auf `main` und legt `dist/` als Artifact am Workflow-Lauf ab — welcher Hoster das
-Ergebnis am Ende ausliefert, ist dort noch bewusst offen gelassen (siehe TODO-Kommentar in der
-Datei).
+`pnpm build` erzeugt einen fertigen `dist/`-Ordner (nur statische Dateien). Der Workflow unter
+[.github/workflows/build.yml](.github/workflows/build.yml) baut die Seite bei jedem Push auf
+`main`, prüft Pull Requests mit (ohne zu veröffentlichen) und deployt danach automatisch auf
+**GitHub Pages** unter `https://johae96.github.io/fpv-thueringen-website/`.
+
+Damit das funktioniert, muss GitHub Pages einmalig für dieses Repo aktiviert werden: Repo-
+Einstellungen → *Pages* → *Build and deployment* → *Source* auf **GitHub Actions** stellen. Der
+Workflow übernimmt danach jeden weiteren Deploy von selbst.
+
+Die Seite läuft unter einem Unterpfad (`/fpv-thueringen-website/`), nicht unter `/` — deshalb
+gehen alle internen Links im Code über den Helper `withBase()`/`absoluteUrl()` aus
+[src/utils/url.ts](src/utils/url.ts), und handgeschriebene Markdown-Links in den Inhalten
+(`[Verein](/verein/)` u. ä.) werden beim Build automatisch über
+[src/plugins/remark-base-path.ts](src/plugins/remark-base-path.ts) umgeschrieben. Der Basispfad
+ist in [src/config.ts](src/config.ts) als `BASE_PATH` hinterlegt.
 
 `public/_redirects` enthält ein auskommentiertes Beispiel, um alte WordPress-URLs per 301 auf
 die neue Struktur umzuleiten, falls das nötig wird.
