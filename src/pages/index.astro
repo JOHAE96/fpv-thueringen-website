@@ -13,7 +13,7 @@ const builds = (await getAllBuilds()).slice(0, BUILDS.buildsOnHome);
 ---
 
 <BaseLayout overlayHeader>
-  <FluidInk variant="hero" enabled={INK.hero}>
+  <FluidInk variant="hero" enabled={false}>
     <div class="hero">
       <p class="hero__eyebrow">FPV-Thüringen e.V.</p>
       <h1 class="hero__title">{SITE.title}</h1>
@@ -47,8 +47,8 @@ const builds = (await getAllBuilds()).slice(0, BUILDS.buildsOnHome);
 
   {
     INK.divider && (
-      <FluidInk variant="divider" strength={INK.strength * 0.7}>
-        <p class="divider__label label">Tusche und Papier</p>
+      <FluidInk variant="divider" enabled={false} strength={INK.strength * 0.7}>
+        <p class="divider__label label">FPV is not a crime</p>
       </FluidInk>
     )
   }
