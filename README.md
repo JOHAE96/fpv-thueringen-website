@@ -163,12 +163,42 @@ Damit das funktioniert, muss GitHub Pages einmalig für dieses Repo aktiviert we
 Einstellungen → *Pages* → *Build and deployment* → *Source* auf **GitHub Actions** stellen. Der
 Workflow übernimmt danach jeden weiteren Deploy von selbst.
 
-Die Seite läuft unter einem Unterpfad (`/fpv-thueringen-website/`), nicht unter `/` — deshalb
-gehen alle internen Links im Code über den Helper `withBase()`/`absoluteUrl()` aus
+Auf GitHub Pages läuft die Seite unter einem Unterpfad (`/fpv-thueringen-website/`), nicht unter
+`/` — deshalb gehen alle internen Links im Code über den Helper `withBase()`/`absoluteUrl()` aus
 [src/utils/url.ts](src/utils/url.ts), und handgeschriebene Markdown-Links in den Inhalten
 (`[Verein](/verein/)` u. ä.) werden beim Build automatisch über
-[src/plugins/remark-base-path.ts](src/plugins/remark-base-path.ts) umgeschrieben. Der Basispfad
-ist in [src/config.ts](src/config.ts) als `BASE_PATH` hinterlegt.
+[src/plugins/remark-base-path.ts](src/plugins/remark-base-path.ts) umgeschrieben. Basispfad und
+Domain sind in [src/config.ts](src/config.ts) als `BASE_PATH` und `SITE.url` hinterlegt und lassen
+sich beim Build über die Umgebungsvariablen `BASE_PATH` und `SITE_URL` überschreiben:
+
+```sh
+SITE_URL=https://example.org BASE_PATH=/ pnpm build
+```
+
+Ohne diese Variablen wird für GitHub Pages gebaut.
+
+### Coolify (eigene Domain)
+
+Parallel zu GitHub Pages kann die Seite über [Coolify](https://coolify.io) auf einem eigenen
+Server unter der richtigen Domain laufen. Einrichtung in der Coolify-Oberfläche:
+
+1. Neue Resource → dieses GitHub-Repo, Branch `main`.
+2. Build Pack **Nixpacks**, *Is it a static site?* anhaken, Publish Directory `dist`.
+3. Umgebungsvariablen anlegen, jeweils mit *Available at Buildtime* (bzw. *Build Variable*)
+   angehakt — sonst kommen sie beim Build nicht an:
+   - `SITE_URL=https://<domain>` (ohne Slash am Ende)
+   - `BASE_PATH=/`
+   - `NIXPACKS_NODE_VERSION=24` (Astro braucht Node ≥ 22.12)
+4. Unter *Domains* `https://<domain>` eintragen; das HTTPS-Zertifikat holt Coolify selbst.
+5. Beim DNS-Anbieter einen A-Record (ggf. auch AAAA) der Domain auf die IP des Servers setzen.
+
+Über die GitHub-App deployt Coolify danach bei jedem Push auf `main` selbst, unabhängig vom
+GitHub-Actions-Workflow.
+
+Soll GitHub Pages abgeschaltet werden, sobald die Domain läuft: in
+[.github/workflows/build.yml](.github/workflows/build.yml) den Job `deploy` und den Schritt
+*Als Pages-Artifact ablegen* entfernen (Typecheck und Build bleiben als CI), die Standardwerte in
+`src/config.ts` auf die Domain und `/` umstellen und Pages in den Repo-Einstellungen deaktivieren.
 
 `public/_redirects` enthält ein auskommentiertes Beispiel, um alte WordPress-URLs per 301 auf
 die neue Struktur umzuleiten, falls das nötig wird.
