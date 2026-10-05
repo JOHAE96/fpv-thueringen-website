@@ -1,6 +1,10 @@
 ---
 import { CLUB, SITE } from "../config";
 import { absoluteUrl, withBase } from "../utils/url";
+// Imported (not served from public/) so the preload hrefs match the hashed,
+// base-prefixed URLs Vite emits for the @font-face rules in fonts.css.
+import serifFont from "../assets/fonts/source-serif-4-latin.woff2?url";
+import monoFont from "../assets/fonts/jetbrains-mono-latin.woff2?url";
 
 export interface ArticleMeta {
   /** Bare article title, without the " — Site name" suffix used in <title>. */
@@ -102,14 +106,14 @@ const blogPosting = article && {
 
 <link
   rel="preload"
-  href={withBase("/fonts/source-serif-4-latin.woff2")}
+  href={serifFont}
   as="font"
   type="font/woff2"
   crossorigin
 />
 <link
   rel="preload"
-  href={withBase("/fonts/jetbrains-mono-latin.woff2")}
+  href={monoFont}
   as="font"
   type="font/woff2"
   crossorigin

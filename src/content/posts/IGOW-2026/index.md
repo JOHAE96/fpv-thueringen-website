@@ -2,7 +2,7 @@
 title: "FPV-Thüringen beim IGOW 2026"
 date: 2026-03-27
 description: "Wir sind wieder dabei! Ein paar unserer Piloten treten beim International Game of Whoop 2026 an."
-tags: ["Wettbewerb"]
+tags: ["Wettbewerb", "IGOW", "Tiny-Whoop"s]
 cover: "./bilder/igow.png"
 draft: false
 ---
