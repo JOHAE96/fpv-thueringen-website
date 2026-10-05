@@ -30,21 +30,20 @@ description: "Impressum und Hinweise zum Datenschutz von FPV Thüringen e.V."
 
 ## Angaben gemäß § 5 DDG
 
-Martin Zemelka
-
-An den Linden 9
+Martin Zemelka  
+An den Linden 9  
 07751 Jena (Cospeda)
 
-Vertreten durch:
+Vertreten durch:  
 Martin Zemelka
 
-Kontakt:
-Telefon: 0170-6673368
+Kontakt:  
+Telefon: 0170-6673368  
 E-Mail: martin.zemelka@gmx.de
 
-Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
-Martin Zemelka
-An den Linden 9
+Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:  
+Martin Zemelka  
+An den Linden 9  
 07751 Jena (Cospeda)
 
 ## Haftungsausschluss:
