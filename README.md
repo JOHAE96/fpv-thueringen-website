@@ -169,10 +169,12 @@ Auf GitHub Pages läuft die Seite unter einem Unterpfad (`/fpv-thueringen-websit
 (`[Verein](/verein/)` u. ä.) werden beim Build automatisch über
 [src/plugins/remark-base-path.ts](src/plugins/remark-base-path.ts) umgeschrieben. Basispfad und
 Domain sind in [src/config.ts](src/config.ts) als `BASE_PATH` und `SITE.url` hinterlegt und lassen
-sich beim Build über die Umgebungsvariablen `BASE_PATH` und `SITE_URL` überschreiben:
+sich beim Build über die Umgebungsvariablen `SITE_URL` und `BASE_PATH` überschreiben. Ist
+`SITE_URL` gesetzt, ist der Basispfad automatisch `/`; `BASE_PATH` braucht es nur für einen
+anderen Unterpfad:
 
 ```sh
-SITE_URL=https://example.org BASE_PATH=/ pnpm build
+SITE_URL=https://example.org pnpm build
 ```
 
 Ohne diese Variablen wird für GitHub Pages gebaut.
@@ -183,14 +185,17 @@ Parallel zu GitHub Pages kann die Seite über [Coolify](https://coolify.io) auf 
 Server unter der richtigen Domain laufen. Einrichtung in der Coolify-Oberfläche:
 
 1. Neue Resource → dieses GitHub-Repo, Branch `main`.
-2. Build Pack **Nixpacks**, *Is it a static site?* anhaken, Publish Directory `dist`.
+2. Build Pack **Nixpacks**, *Is it a static site?* anhaken, Publish Directory **`/dist`** (mit
+   Schrägstrich — bleibt es bei `/`, liefert nginx das ganze Repo samt README aus und zeigt nur
+   seine Standardseite). *Ports Exposes* muss `80` sein (nginx), sonst gibt es 504.
 3. Umgebungsvariablen anlegen, jeweils mit *Available at Buildtime* (bzw. *Build Variable*)
    angehakt — sonst kommen sie beim Build nicht an:
    - `SITE_URL=https://<domain>` (ohne Slash am Ende)
-   - `BASE_PATH=/`
    - `NIXPACKS_NODE_VERSION=24` (Astro braucht Node ≥ 22.12)
 4. Unter *Domains* `https://<domain>` eintragen; das HTTPS-Zertifikat holt Coolify selbst.
-5. Beim DNS-Anbieter einen A-Record (ggf. auch AAAA) der Domain auf die IP des Servers setzen.
+5. Beim DNS-Anbieter einen A-Record der Domain auf die IP des Servers setzen. Einen AAAA-Record
+   nur, wenn der Server per IPv6 auf Port 80/443 tatsächlich erreichbar ist — Let's Encrypt
+   prüft bevorzugt über IPv6, sonst bleibt es beim Platzhalter-Zertifikat von Traefik.
 
 Über die GitHub-App deployt Coolify danach bei jedem Push auf `main` selbst, unabhängig vom
 GitHub-Actions-Workflow.

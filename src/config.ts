@@ -20,13 +20,16 @@ export interface SocialLink {
 
 /**
  * Path the site is served under. Defaults to the GitHub Pages project page
- * (`https://johae96.github.io/fpv-thueringen-website/`); the Coolify
- * deployment on the club's own domain overrides it with `BASE_PATH=/` at
- * build time. Passed to Astro's `base` config and used to build the club's
- * canonical URL below — the rest of the app derives base-aware links from
- * `import.meta.env.BASE_URL` at runtime instead (see src/utils/url.ts).
+ * (`https://johae96.github.io/fpv-thueringen-website/`), or to `/` once
+ * `SITE_URL` points the build at the club's own domain (the Coolify
+ * deployment). `BASE_PATH` overrides either. Passed to Astro's `base` config
+ * and used to build the club's canonical URL below — the rest of the app
+ * derives base-aware links from `import.meta.env.BASE_URL` at runtime instead
+ * (see src/utils/url.ts).
  */
-export const BASE_PATH = process.env.BASE_PATH || "/fpv-thueringen-website";
+export const BASE_PATH =
+  process.env.BASE_PATH ||
+  (process.env.SITE_URL ? "/" : "/fpv-thueringen-website");
 
 export const SITE = {
   /**
