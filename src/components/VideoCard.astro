@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 import { formatDate, isoDate } from "../utils/date";
+import { youtubeEmbed, youtubeId, youtubeThumbnail } from "../utils/youtube";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -10,48 +11,109 @@ interface Props {
 
 const { video } = Astro.props;
 const { title, url, thumbnail, date, pilot } = video.data;
+
+const id = youtubeId(url);
 ---
 
 <article class="video-card">
-  <a
-    class="video-card__link"
-    href={url}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span class="video-card__thumb">
-      <Image src={thumbnail} alt="" width={480} height={270} loading="lazy" />
+  <div class="video-card__media">
+    {/* Without JS (or with a modifier click) this stays a plain link to
+        YouTube; the script below swaps it for the player in place. */}
+    <a
+      class="video-card__thumb"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${title} abspielen`}
+      data-embed={id && youtubeEmbed(id)}
+      data-title={title}
+    >
+      {
+        thumbnail ? (
+          <Image src={thumbnail} alt="" width={480} height={270} loading="lazy" />
+        ) : (
+          id && (
+            <img
+              src={youtubeThumbnail(id)}
+              alt=""
+              width="480"
+              height="360"
+              loading="lazy"
+              decoding="async"
+            />
+          )
+        )
+      }
       <span class="video-card__play" aria-hidden="true"></span>
-    </span>
+    </a>
+  </div>
 
-    <span class="video-card__body">
-      <span class="video-card__title">{title}</span>
-      <span class="video-card__meta label">
-        <time datetime={isoDate(date)}>{formatDate(date)}</time>
-        {pilot && <span> · {pilot}</span>}
-        <span class="video-card__ext"> · YouTube ↗</span>
-      </span>
+  <div class="video-card__body">
+    <span class="video-card__title">{title}</span>
+    <span class="video-card__meta label">
+      <time datetime={isoDate(date)}>{formatDate(date)}</time>
+      {pilot && <span> · {pilot}</span>}
+      <span> · </span>
+      <a
+        class="video-card__ext"
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer">YouTube ↗</a
+      >
     </span>
-  </a>
+  </div>
 </article>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const modified =
+      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (event.button !== 0 || modified) return;
+
+    const link = (event.target as Element).closest<HTMLAnchorElement>(
+      "a.video-card__thumb[data-embed]",
+    );
+    const media = link?.parentElement;
+    if (!link || !media) return;
+
+    event.preventDefault();
+
+    const iframe = document.createElement("iframe");
+    iframe.src = link.dataset.embed!;
+    iframe.title = link.dataset.title ?? "YouTube-Video";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allowFullscreen = true;
+
+    media.replaceChildren(iframe);
+    iframe.focus();
+  });
+</script>
 
 <style>
   .video-card {
     background: var(--color-bg);
   }
 
-  .video-card__link {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-  }
-
-  .video-card__thumb {
+  .video-card__media {
     position: relative;
-    display: block;
     aspect-ratio: 16 / 9;
     overflow: hidden;
     background: var(--color-bg-subtle);
+  }
+
+  .video-card__thumb {
+    display: block;
+    height: 100%;
+  }
+
+  /* Injected by the click handler, so it never carries the scope attribute. */
+  .video-card__media :global(iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 
   .video-card__thumb :global(img) {
@@ -61,11 +123,11 @@ const { title, url, thumbnail, date, pilot } = video.data;
     transition: transform var(--duration-base) var(--ease-out);
   }
 
-  .video-card:hover .video-card__thumb :global(img) {
+  .video-card__thumb:hover :global(img) {
     transform: scale(1.03);
   }
 
-  /* Pure CSS play button — no iframe, no embed. */
+  /* Pure CSS play button; the iframe only loads once it is clicked. */
   .video-card__play {
     position: absolute;
     inset: 0;
@@ -84,7 +146,8 @@ const { title, url, thumbnail, date, pilot } = video.data;
     transition: background var(--duration-fast) var(--ease-out);
   }
 
-  .video-card:hover .video-card__play::after {
+  .video-card__thumb:hover .video-card__play::after,
+  .video-card__thumb:focus-visible .video-card__play::after {
     background: var(--color-accent);
   }
 
@@ -115,15 +178,17 @@ const { title, url, thumbnail, date, pilot } = video.data;
     color: var(--color-fg);
   }
 
-  .video-card:hover .video-card__title {
+  .video-card__ext {
+    color: inherit;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .video-card__ext:hover {
     color: var(--color-accent);
   }
 
   .video-card__meta {
     text-transform: none;
-  }
-
-  .video-card__ext {
-    text-transform: uppercase;
   }
 </style>

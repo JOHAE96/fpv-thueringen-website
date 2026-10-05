@@ -94,9 +94,13 @@ const videos = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      /** External YouTube link — opened in a new tab, never embedded. */
+      /**
+       * YouTube link. The card plays it inline (youtube-nocookie embed) once
+       * clicked; non-YouTube URLs just open in a new tab.
+       */
       url: z.url(),
-      thumbnail: image(),
+      /** Optional — falls back to YouTube's own preview image. */
+      thumbnail: image().optional(),
       date: z.coerce.date(),
       pilot: z.string().optional(),
     }),

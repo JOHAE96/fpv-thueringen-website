@@ -4,4 +4,4 @@ description: "Kuratierte Flugvideos unserer Mitglieder — Freestyle, Racing und
 ---
 
 Eine kleine, handverlesene Auswahl an Flugvideos unserer Mitglieder. Die Videos liegen bei
-YouTube — ein Klick auf ein Vorschaubild öffnet das jeweilige Video in einem neuen Tab.
+YouTube — ein Klick auf ein Vorschaubild spielt das Video direkt hier auf der Seite ab.
