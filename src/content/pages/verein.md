@@ -17,9 +17,9 @@ Eine Vereinsmitgliedschaft gewährt keine Sonderregelungen oder Ausnahmen von de
 Komm einfach zu einem unserer nächsten Flugtreffen. Nach einem persönlichen Kennenlernen, kannst du die Beitrittserklärung ausfüllen. Wirf gerne vorab einen Blick in unsere Dokumente:
 
 # Dokumente & Downloads
-- 📄 [Link: Beitrittserklärung – Muster / Vorschau(PDF)]
-- 📄 [Link: Satzung des FPV Thüringen e.V.(PDF)]
-- 📄 [Link: Beitragsordnung (PDF)]
+- 📄 [Beitrittserklärung – Muster / Vorschau (PDF)](/documents/Beitrittserklaerung-Vorschau.pdf)
+- 📄 [Satzung des FPV Thüringen e.V. (PDF)](/documents/Satzung-des-FPV-Thueringen-e.V.pdf)
+- 📄 [Beitragsordnung (PDF)](/documents/Beitragsordnung-FPV-Thueringen-e.V.pdf)
 Wichtiger Hinweis für Jugendliche & Erziehungsberechtigte
 Nachwuchspiloten sind bei uns herzlich willkommen! Für die Aufnahme von Minderjährigen gelten folgende Grundregeln:
 
