@@ -19,17 +19,21 @@ export interface SocialLink {
 }
 
 /**
- * Path the site is served under on GitHub Pages (a project page, not a
- * `<user>.github.io` root repo), e.g. `https://johae96.github.io/fpv-thueringen-website/`.
- * Passed to Astro's `base` config and used to build the club's canonical
- * URL below — the rest of the app derives base-aware links from
+ * Path the site is served under. Defaults to the GitHub Pages project page
+ * (`https://johae96.github.io/fpv-thueringen-website/`); the Coolify
+ * deployment on the club's own domain overrides it with `BASE_PATH=/` at
+ * build time. Passed to Astro's `base` config and used to build the club's
+ * canonical URL below — the rest of the app derives base-aware links from
  * `import.meta.env.BASE_URL` at runtime instead (see src/utils/url.ts).
  */
-export const BASE_PATH = "/fpv-thueringen-website";
+export const BASE_PATH = process.env.BASE_PATH || "/fpv-thueringen-website";
 
 export const SITE = {
-  /** Bare origin of the deployed site — no path, no trailing slash. */
-  url: "https://johae96.github.io",
+  /**
+   * Bare origin of the deployed site — no path, no trailing slash. Set
+   * `SITE_URL` at build time to deploy under a different domain.
+   */
+  url: (process.env.SITE_URL || "https://johae96.github.io").replace(/\/+$/, ""),
   title: "FPV Thüringen e.V.",
   /**
    * Short decorative mark used for the vertical rail and the loading screen
@@ -54,7 +58,7 @@ export const SITE = {
  */
 export const CLUB = {
   name: "FPV Thüringen e.V.",
-  url: `${SITE.url}${BASE_PATH}`,
+  url: `${SITE.url}${BASE_PATH === "/" ? "" : BASE_PATH}`,
   /** Used for JSON-LD `address.addressRegion`. No street address published. */
   region: "Thüringen",
 } as const;
