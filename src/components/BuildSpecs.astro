@@ -66,6 +66,7 @@ const rows: Array<{ label: string; value?: string | null }> = [
     gap: var(--rule-width);
     background: var(--color-rule);
     border: var(--rule-width) solid var(--color-rule);
+    container-type: inline-size;
   }
 
   .build-specs__row {
@@ -78,9 +79,13 @@ const rows: Array<{ label: string; value?: string | null }> = [
 
   .build-specs__value {
     margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
-  @media (max-width: 30rem) {
+  /* Stack label over value whenever the list itself is narrow — on mobile
+     and in the 18rem desktop sidebar of BuildLayout alike. */
+  @container (max-width: 30rem) {
     .build-specs__row {
       grid-template-columns: 1fr;
       gap: var(--space-1);
