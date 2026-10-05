@@ -2,7 +2,7 @@
 title: "Johannes’ 2-Zoll-1S-Drohne"
 date: 2026-09-10
 description: "Leichter 1S-Whoop"
-cover: "./bilder/cover.jpg"
+cover: "./bilder/2-inch-Johannes.jpeg"
 components:
   frame: "Betafpv Twiglet"
   stack: "Betafpv 5in1 FC"
