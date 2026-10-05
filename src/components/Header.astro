@@ -26,7 +26,7 @@ const isCurrent = (href: string) => {
   </a>
 
   <div class="site-header__end">
-    <nav class="nav" aria-label="Hauptnavigation">
+    <nav class="nav" id="site-nav" aria-label="Hauptnavigation">
       <ul class="nav__list">
         {
           NAV.map((item) => (
@@ -43,8 +43,66 @@ const isCurrent = (href: string) => {
       </ul>
     </nav>
     <ThemeToggle />
+    <button
+      class="menu-toggle"
+      type="button"
+      data-menu-toggle
+      aria-controls="site-nav"
+      aria-expanded="false"
+      aria-label="Menü öffnen"
+    >
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+    </button>
   </div>
 </header>
+
+<script is:inline>
+  /**
+   * Mobile burger menu. Without JavaScript the header never gets
+   * `data-menu`, so on small screens the nav simply wraps instead of being
+   * hidden behind a button that cannot open it.
+   */
+  (() => {
+    const header = document.querySelector(".site-header");
+    const button = header?.querySelector("[data-menu-toggle]");
+    const nav = header?.querySelector("#site-nav");
+    if (!header || !button || !nav) return;
+
+    header.dataset.menu = "closed";
+
+    const setOpen = (open) => {
+      header.dataset.menu = open ? "open" : "closed";
+      button.setAttribute("aria-expanded", String(open));
+      button.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+    };
+
+    button.addEventListener("click", () =>
+      setOpen(header.dataset.menu !== "open"),
+    );
+
+    nav.addEventListener("click", (event) => {
+      if (event.target.closest("a")) setOpen(false);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (header.dataset.menu === "open" && !header.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && header.dataset.menu === "open") {
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    // Leaving the mobile layout must not leave a stale open state behind.
+    window.matchMedia("(min-width: 60rem)").addEventListener("change", (event) => {
+      if (event.matches) setOpen(false);
+    });
+  })();
+</script>
 
 <style>
   .site-header {
@@ -124,6 +182,114 @@ const isCurrent = (href: string) => {
     text-underline-offset: 0.4em;
   }
 
+  .menu-toggle {
+    display: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin-inline-end: calc(var(--space-2) * -1);
+    color: var(--color-fg-muted);
+    border-radius: var(--radius);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .menu-toggle:hover,
+  .menu-toggle[aria-expanded="true"] {
+    color: var(--color-fg);
+  }
+
+  /* Three bars drawn from one element: the span is the middle bar, the
+     shadows are the outer two. Opening folds them into an X. */
+  .menu-toggle__bars,
+  .menu-toggle__bars::before,
+  .menu-toggle__bars::after {
+    display: block;
+    width: 1.125rem;
+    height: 1px;
+    background: currentColor;
+    transition:
+      translate var(--duration-base) var(--ease-out),
+      rotate var(--duration-base) var(--ease-out),
+      opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .menu-toggle__bars {
+    position: relative;
+  }
+
+  .menu-toggle__bars::before,
+  .menu-toggle__bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+
+  .menu-toggle__bars::before {
+    translate: 0 -0.3125rem;
+  }
+
+  .menu-toggle__bars::after {
+    translate: 0 0.3125rem;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle__bars {
+    background: transparent;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle__bars::before {
+    translate: 0;
+    rotate: 45deg;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle__bars::after {
+    translate: 0;
+    rotate: -45deg;
+  }
+
+  @media (max-width: 59.99rem) {
+    .site-header[data-menu] .menu-toggle {
+      display: grid;
+    }
+
+    .site-header[data-menu] .nav {
+      position: absolute;
+      top: 100%;
+      inset-inline: 0;
+      padding: var(--space-2) var(--gutter) var(--space-6);
+      background: var(--color-bg);
+      border-bottom: var(--rule-width) solid var(--color-rule);
+    }
+
+    .site-header[data-menu="closed"] .nav {
+      display: none;
+    }
+
+    .site-header[data-menu] .nav__list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .site-header[data-menu] .nav a {
+      display: block;
+      padding-block: var(--space-3);
+      font-size: var(--text-base);
+    }
+
+    .site-header[data-menu] .nav li + li {
+      border-top: var(--rule-width) solid var(--color-rule);
+    }
+
+    /* Without JavaScript there is no burger, so let the links wrap. */
+    .site-header:not([data-menu]) {
+      flex-wrap: wrap;
+    }
+
+    .site-header:not([data-menu]) .nav__list {
+      flex-wrap: wrap;
+    }
+  }
+
   @media (max-width: 40rem) {
     .brand__sub {
       display: none;
@@ -131,6 +297,14 @@ const isCurrent = (href: string) => {
 
     .site-header {
       padding-block: var(--space-4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-toggle__bars,
+    .menu-toggle__bars::before,
+    .menu-toggle__bars::after {
+      transition: none;
     }
   }
 </style>
