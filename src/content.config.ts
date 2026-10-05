@@ -39,6 +39,9 @@ const buildComponentsSchema = z.object({
   motors: z.string().optional(),
   props: z.string().optional(),
   cam: z.string().optional(),
+  /** Empty (`gps:`) parses as null and renders no row. */
+  gps: z.string().nullish(),
+  buzzer: z.string().nullish(),
   battery: z.string().optional(),
 });
 
@@ -49,11 +52,14 @@ const builds = defineCollection({
       title: z.string(),
       date: z.coerce.date(),
       description: z.string(),
-      pilot: z.string().optional(),
+      /** Shown next to the date in the build header. Empty (`pilot:`) parses as null. */
+      pilot: z.string().nullish(),
       cover: image().optional(),
       components: buildComponentsSchema,
       /** Free-form key/value pairs for anything not covered above (GPS, Buzzer, Kabelbaum, …). */
       extraComponents: z.record(z.string(), z.string()).optional(),
+      /** Top-level rather than under `components`; empty (`actionCam:`) parses as null. */
+      actionCam: z.string().nullish(),
       /** Grams, without battery. */
       weight: z.number().optional(),
       /** Grams, with battery. */

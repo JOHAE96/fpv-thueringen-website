@@ -2,6 +2,7 @@
 title: "Axels Kayou Mini"
 date: 2026-09-10
 description: "Klein aber gut. Richtige Spaßmaschine auf 3S."
+pilot: "Axel"
 cover: "./bilder/Kayou.jpeg"
 components:
   frame: "GepRC Mark5"
@@ -12,7 +13,7 @@ components:
   motors: "T-Motor F1103II-8000KV"
   props: "HQ Durable Prop"
   cam: "Walksnail Avatar HD"
-  GPS: 
+  gps: 
   battery: "3S 560mAh"
 actionCam:
 weight: 78

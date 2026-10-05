@@ -2,6 +2,7 @@
 title: "Schleiferino"
 date: 2026-09-10
 description: "Spitzname: Schleifi. Wenns mal etwas unauffälliger sein soll."
+pilot:
 cover: "./bilder/Schleiferino.jpeg"
 components:
   frame: "Schleiferino (Discord member designed and produced frame)"
@@ -12,8 +13,8 @@ components:
   motors: "T-Motor Pacer 1604 2850KV"
   props: "HQ Durable Prop"
   cam: "Walksnail Avatar HD Pro Cam"
-  Buzzer: ViFly Finder V2 Mini
-  GPS: 
+  buzzer: ViFly Finder V2 Mini
+  gps: 
   battery: "6S 650mAh/550mAh (DogCom, Tattu)"
 actionCam:
 weight: 231

@@ -2,6 +2,7 @@
 title: "Axels Mark5"
 date: 2026-09-10
 description: "Womit für Axel alles begann. Erster Selbstbau. Immer dreckig, aber fliegt sauber"
+pilot: "Axel"
 cover: "./bilder/Mark5.jpeg"
 components:
   frame: "GepRC Mark5"
@@ -12,7 +13,7 @@ components:
   motors: "Xing E-Pro 2207 1800KV"
   props: "HQ Durable Prop 5045 3-Blade 5X4.5X3V1S"
   cam: "Caddx Ratel 2"
-  GPS: 
+  gps: 
   battery: "6S (Ovonic, CNHL, Tattu)"
 actionCam: DJI Action2
 weight: 470

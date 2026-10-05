@@ -2,6 +2,8 @@
 title: "3,5-Zoll Freestyle Volador VX35"
 date: 2026-09-14
 description: "Klein genug für stadtnahe Spots, aber ein echtes Powerhouse unter der Haube"
+pilot: Johannes
+cover: "./bilder/volador_vx35.jpeg"
 components:
   frame: "Volador vx35"
   stack: "SpeedyBee F405 Mini"
@@ -11,10 +13,9 @@ components:
   motors: "FlyFishRC Flash 1804 3500KV"
   props: "Gemfan Hurrikan 3520"
   cam: "Foxeer T-Rex"
+  gps: "M10 Sologood"
+  buzzer: "JHE20B"
   battery: "4S 850mAh"
-extraComponents:
-  GPS: "M10 Sologood"
-  Beeper: "JHE20B"
 weight: 191
 weightWithBattery: 284
 ---

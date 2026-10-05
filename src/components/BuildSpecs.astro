@@ -5,11 +5,12 @@ import type { Build } from "../utils/builds";
 interface Props {
   components: Build["data"]["components"];
   extraComponents?: Build["data"]["extraComponents"];
+  actionCam?: Build["data"]["actionCam"];
   weight?: number;
   weightWithBattery?: number;
 }
 
-const { components, extraComponents, weight, weightWithBattery } =
+const { components, extraComponents, actionCam, weight, weightWithBattery } =
   Astro.props;
 
 /**
@@ -18,7 +19,7 @@ const { components, extraComponents, weight, weightWithBattery } =
  * only the ones actually set produce a row, so a build without e.g. a
  * separate receiver renders no empty term/definition pair for it.
  */
-const rows: Array<{ label: string; value?: string }> = [
+const rows: Array<{ label: string; value?: string | null }> = [
   { label: "Frame", value: components.frame },
   { label: "Stack", value: components.stack },
   { label: "Empfänger", value: components.receiver },
@@ -27,6 +28,9 @@ const rows: Array<{ label: string; value?: string }> = [
   { label: "Motoren", value: components.motors },
   { label: "Props", value: components.props },
   { label: "Kamera", value: components.cam },
+  { label: "Action-Cam", value: actionCam },
+  { label: "GPS", value: components.gps },
+  { label: "Buzzer", value: components.buzzer },
   { label: "Akku", value: components.battery },
   { label: "Gewicht", value: weight !== undefined ? formatWeight(weight) : undefined },
   {
