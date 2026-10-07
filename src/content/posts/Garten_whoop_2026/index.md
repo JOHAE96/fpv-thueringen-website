@@ -4,7 +4,7 @@ date: 2026-06-20
 description: "Wir haben das gute Wetter genutzt und sind in Johannes' Garten tinywhoop geflogen."
 tags: ["Verein", "Garten", "tinywhoop", "Sommer"]
 cover: "./bilder/tire_as_gate.jpeg"
-draft: true
+draft: false
 ---
 
 Was gibt es Besseres als Sommer, Sonne und jede Menge Propeller-Sound? Letzten Samstag haben wir das gute Wetter ausgenutzt und Johannes’ Garten unsicher gemacht!

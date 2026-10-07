@@ -4,7 +4,7 @@ date: 2026-01-19
 description: "Wir haben das gute Wetter genutzt und sind in Johannes' Garten tinywhoop geflogen."
 tags: ["Treffen", "Winter", "dunkel", "FPV", "Licht"]
 cover: "./bilder/01.jpeg"
-draft: true
+draft: false
 ---
 
 Letzten Sonntag haben wir uns gegen 16:30 Uhr spontan auf einem Parkplatz getroffen. Temperaturen irgendwo zwischen „eiskalt“ und „warum tun wir uns das an“ – und trotzdem waren wir zu acht.

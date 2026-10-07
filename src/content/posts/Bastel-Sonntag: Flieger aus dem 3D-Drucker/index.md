@@ -4,7 +4,7 @@ date: 2025-08-28
 description: "Treffen zum gemeinsamen Bau-Tag getroffen und jeder hat seinen eigenen 3D-gedruckten RC-Flieger zusammengesetzt."
 tags: ["Verein", "3D-Druck", "Basteln", "Flugzeug"]
 cover: "./bilder/05.jpg"
-draft: true
+draft: false
 ---
 
 Letzten Sonntag haben sich einige Communitymitglieder aus Jena zum gemeinsamen Bau-Tag getroffen und jeder hat seinen eigenen 3D-gedruckten RC-Flieger zusammengesetzt. Die Einzelteile kamen frisch aus dem Drucker, wurden Stück für Stück mit Sekundenkleber und Aktivator verbunden und anschließend wurden Kleinteile und Elektronik eingesetzt.

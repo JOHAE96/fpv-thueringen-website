@@ -1,6 +1,6 @@
 ---
 title: "FPV Thüringen wird zum Verein – Werde Gründungsmitglied!"
-date: 2026-07-013
+date: 2026-07-13
 description: "Aus einer lockeren Community wird ein offizieller Verein."
 tags: ["verein", "gründung", "community", "fpv", "thüringen"]
 draft: false

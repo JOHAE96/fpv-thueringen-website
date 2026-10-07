@@ -3,7 +3,7 @@ title: "FPV-Thüringen.de – Die neue Plattform für FPV-Pilot:innen in unserer
 date: 2026-01-01
 description: "Seit heute ist unsere Website FPV-Thüringen.de online. Hier bündeln wir künftig alles, was für FPV-Interessierte in Thüringen spannend ist: News, Builds, Videos und Community."
 tags: ["Verein", "FPV", "Thüringen", "Tinywhoop", ]
-draft: true
+draft: false
 ---
 
 WSeit heute ist unsere Website FPV-Thüringen.de online.
