@@ -214,3 +214,5 @@ Der Code basiert auf dem MIT-lizenzierten Astro-Theme [Sumi](https://github.com/
 von [kpab](https://github.com/kpab) — siehe [LICENSE](./LICENSE). Die Vereinsinhalte
 (Texte, Bilder) unterliegen dem Urheberrecht von FPV Thüringen e.V. bzw. der jeweiligen
 Autorin/des jeweiligen Autors.
+
+.
