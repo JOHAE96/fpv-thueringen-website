@@ -19,4 +19,4 @@ Wer mitfliegen oder einfach mal reinschnuppern will, ist herzlich willkommen.
 
 
 - WhatsApp: [Einladung](https://chat.whatsapp.com/FdH2PwaNlQHGrziOzA7uwN)
-- Discord: [Einladung](https://discord.gg/dDnZWww3k)
+- Discord: [Einladung](https://discord.gg/EKkZgbU5gH)
