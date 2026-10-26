@@ -1,7 +1,7 @@
 ---
 title: "Mein erster „Gehversuch“ mit dem Thema Wings"
 date: 2026-09-10
-description: "Womit für Axel alles begann. Erster Selbstbau. Immer dreckig, aber fliegt sauber"
+description: "Martins erster Wing-Selbstbau. Voller Kleber, aber fliegt sauber"
 pilot: "Martin"
 cover: "./bilder/StyroplaneV2.jpg"
 components:
