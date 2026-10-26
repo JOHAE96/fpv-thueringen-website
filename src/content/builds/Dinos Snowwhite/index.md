@@ -21,5 +21,5 @@ weight: 467                # optional, Gramm ohne Akku
 weightWithBattery: 680     # optional, Gramm mit Akku
 ---
 
-Freitext: Der Frame wurde ausgewählt bevor überhaupt klar war wie FPV fliegen eigentlich geht. Er war optisch ansprechend und die LEDs bringen bestimmt 0,01 km/h mehr. 
+Der Frame wurde ausgewählt bevor überhaupt klar war wie FPV fliegen eigentlich geht. Er war optisch ansprechend und die LEDs bringen bestimmt 0,01 km/h mehr. 
 Flugverhalten wird nachgegeben, da es der zweite Build ist und wie auf den Bildern zu erkennen noch nicht geflogen wurde. Ob ich was anders machen würde? Beim Stack keine 2 verschiedenen Hersteller für ESC und FC verwenden, da umgepinnt werden musste.
