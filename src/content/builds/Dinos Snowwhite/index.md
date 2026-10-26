@@ -2,8 +2,8 @@
 title: "Schneeweißchen"
 date: 2026-10-18
 description: "Kurzbeschreibung"
-pilot: "d1n0___ oder auch Daniel"          # optional
-cover: "https://cdn.discordapp.com/attachments/1561467851489935460/1561467891159924937/IMG_20261018_192207.jpg?ex=6ad675cb&is=6ad5244b&hm=47f639c9474dfef3a991eb7d3a249c3651625173ea95975a42c16d2f2082f722"   # optional
+pilot: "d1n0___ oder auch Daniel"         
+cover: "./bilder/Snowwhite.jpeg"   # optional
 components:
   frame: "Speedy Bee Mario 5 White"
   stack: "FC: Speedy Bee F7 V3 & ESC: OddityRC Vortex S60 6S BLS"
